@@ -1,31 +1,26 @@
-import { StatusBar } from 'expo-status-bar';
 import React from "react";
-import { Alert } from "react-native";
+import { Alert } from "react-native"
 import Loading from "./Loading";
 import * as Location from 'expo-location';
 
-
 export default class extends React.Component {
-  state = {
-    isLoading: true
-  };
+  //함수설정
   getLocation = async () => {
     try {
+      //throw Error();
+      //일부러 에러 던지기
       await Location.requestPermissionsAsync();
-      const { coords: { latitude, longitude } } = await Location.getCurrentPositionAsync();
-      // Send to API and get weather!//
-      this.setState({ isLoading: false });
-
+      const location = await Location.getCurrentPositionAsync();
+      console.log(location);
     } catch (error) {
       Alert.alert("Can't find you.", "So sad");
-
     }
   };
   componentDidMount() {
     this.getLocation();
+
   }
   render() {
-    const { isLoading } = this.state;
-    return isLoading ? <Loading /> : null;
+    return <Loading />;
   }
 }
